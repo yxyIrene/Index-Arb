@@ -193,7 +193,7 @@ class PortfolioLoader:
         """
         
         if portfolio_name not in self._portfolio_position.keys():
-            position = ddb('bctmate').load_table_by_sql('dfs://bctmate_report', 'trade_detail', f'select 标的代码, 分红调整剩余数量, 客户头寸方向, 标的乘数, 标的类型 from trade_detail where 估值日期=2025.12.31, 主合约编号 in {main_contracts}')
+            position = ddb('bctmate').load_table_by_sql('dfs://bctmate_report', 'trade_detail', f'select 标的代码, 分红调整剩余数量, 客户头寸方向, 标的乘数, 标的类型 from trade_detail where 估值日期={self.date_str}, 主合约编号 in {main_contracts}')
             position = position.loc[position['客户头寸方向'].isin(['多头', '空头'])]
             position['side'] = position['客户头寸方向'].map({'多头': 1, '空头': -1})
             position['quantity'] = position['分红调整剩余数量'] * position['side'] * position['标的乘数']

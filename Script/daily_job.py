@@ -5,7 +5,7 @@ from Strategy.get_basket import *
 import os 
 from Framework.tool import *
 current_path = os.path.dirname(os.path.abspath(__file__))
-project_name = 'Index_Arbitrage'
+project_name = '001_Index_Arbitrage'
 project_path = current_path.split(project_name)[0] + project_name + '/'
 import tqdm
 
@@ -84,6 +84,8 @@ def adjust_all_strategy(current_date):
             weight_df['开平标志'] = None
             weight_df['投保标志'] = None
             weight_df['委托价格'] = None
+            weight_df['扩展业务类型'] = None
+            weight_df['扩展业务方向'] = None
             trade_df = weight_df.loc[weight_df['委托数量'] > 0]
             trade_df = trade_df[['产品','资产单元',	'投资组合',	'市场',	'代码',	'名称',	'买卖方向',	'开平标志',	'投保标志',	'委托价格',	'委托数量']]
             trade_df.to_excel(project_path + f'Output/{current_date}/策略目标仓位/{strategy_name} IMS交易指令模板.xlsx', index=False)
